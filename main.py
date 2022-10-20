@@ -40,7 +40,7 @@ def main():
     
     def flag_unresolved(price_list):
         
-        for obj in furniture:
+        for obj in furnitures:
             if obj.itemid in price_list["unresolvedItems"]:
                 obj.flag()
     
@@ -50,8 +50,8 @@ def main():
         unique_worlds = set()
         
         largest_quantity = []
-        for obj in furniture:
-            largest_quantity.append(obj.quantity)
+        for furniture in furnitures:
+            largest_quantity.append(furniture.quantity)
         largest_quantity = max(largest_quantity)
         
         itemid_string = ','.join(str(x) for x in itemids)
@@ -62,27 +62,24 @@ def main():
         prices = price_request.json()
         flag_unresolved(prices)
         
-        for obj in furniture:
-            if obj.not_on_market == 0:
+        for furniture in furnitures:
+            if furniture.not_on_market == 0:
                 #print('working on' + obj.name)
-                temp_item_id = str(obj.itemid)
-                for listing in prices["items"][temp_item_id]["listings"][:obj.quantity]:
-                    obj.price_list.append(listing["pricePerUnit"])
+                temp_item_id = str(furniture.itemid)
+                for listing in prices["items"][temp_item_id]["listings"][:furniture.quantity]:
+                    furniture.price_list.append(listing["pricePerUnit"])
                     total_cost = total_cost + listing["pricePerUnit"]
-                    obj.world_list.append(listing["worldName"])
+                    furniture.world_list.append(listing["worldName"])
                     unique_worlds.add(listing["worldName"])
-                    
-                    
-                        
         
         return total_cost, unique_worlds           
     
        
-    furniture, itemids = parse_shoppinglist(furniture_data)
+    furnitures, itemids = parse_shoppinglist(furniture_data)
     total_cost, unique_worlds = get_prices('Light')
     print(f"Total Cost: {total_cost:,} gil")
     print(f"Items found on {unique_worlds}")
-    
+    print("All done!")
            
 
 if __name__ == '__main__':
