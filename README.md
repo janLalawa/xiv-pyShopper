@@ -1,8 +1,10 @@
 # XIV-PyShopper
  A tool to help you buy housing items in Final Fantasy 14
 
+
 Sample output for now:
 
+```
 Your shopping list for Odin will cost approx. 1,193,884 gil
 ------------------------
 14x White Rectangular Partition
@@ -113,3 +115,4 @@ Items found on {'Odin', 'Alpha', 'Twintania', 'Phoenix', 'Zodiark', 'Lich', 'Rai
 
 Could not find these items on the market: [['Dance Pole', 35572], ['Jumbo Oriental Orange Basket', 16000], ["Queen's Rest", 33254], ["Fool's Threshold", 22572]]
 Thank you for shopping with us today!
+```
