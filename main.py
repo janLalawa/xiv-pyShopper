@@ -89,19 +89,14 @@ class Shopper:
         return total_cost, unique_worlds, not_on_market            
     
     def create_worlds(self, furnitures, unique_worlds):
-        
-        world_list = []
-        counter = -1
-        
-        for worldname in unique_worlds:
-            counter += 1
-            world_list.append(World(worldname, [], 0))
+        world_list = [World(name, [], 0) for name in unique_worlds]
+        for world in world_list:
             for furniture in furnitures:
-                world_item_count = furniture.world_list.count(worldname)
-                if world_item_count > 0:
-                    if furniture.not_on_market == 0:
-                        world_list[counter].add_to_price(int(sum(furniture.price_list)/world_item_count)) #Super lazy and innacurate I know
-                        world_list[counter].add_to_totals(furniture.name, world_item_count)
+                world_item_count = furniture.world_list.count(world.name)
+                if world_item_count > 0 and not furniture.not_on_market:
+                    # Super lazy and innacurate I know
+                    world.add_to_price(int(sum(furniture.price_list)/world_item_count))
+                    world.add_to_totals(furniture.name, world_item_count)
         return world_list
                 
     def print_world_shopping_list(self, worlds):
