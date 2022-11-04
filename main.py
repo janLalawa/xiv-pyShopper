@@ -85,7 +85,7 @@ class Shopper:
 
     def get_price_request(self, world_dc_region):
         largest_quantity = self.get_largest_quantity()
-        itemid_string = ','.join(str(x) for x in self.itemids)
+        itemid_string = ','.join(str(x) for x in self.itemIds)
         universalis_query = 'https://universalis.app/api/v2/{location}/{item_list}?listings={listings}&entries=0'            
         price_request = requests.get(universalis_query.format(
             location=world_dc_region, item_list=itemid_string, listings=largest_quantity))
