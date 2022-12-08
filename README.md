@@ -1,6 +1,7 @@
 # XIV-PyShopper
-** A tool to help you buy housing items in Final Fantasy 14 **
-A'shii Triglav (Raiden - Light)
+**A tool to help you buy housing items in Final Fantasy 14**
+
+*A'shii Triglav (Raiden - Light)*
 
 ---
 ## What does this tool do and why?
