@@ -1,5 +1,8 @@
 import requests
 import json
+
+DATACENTRE_REGION = 'Light'
+MAKEPLACE_JSON = 'Save1.json'
     
 class Item:
     def __init__(self, name, itemid, quantity, price_list, world_list, not_on_market):
@@ -75,7 +78,7 @@ class Shopper:
         
         for furniture in self.furnitures:
             if furniture.not_on_market:
-                not_on_market.append([furniture.name, furniture.itemid])
+                not_on_market.append([furniture.name, furniture.itemid, furniture.quantity])
             else:
                 for listing in prices["items"][furniture.get_itemid_str()]["listings"][:furniture.quantity]:
                     furniture.append_world_price(listing)
@@ -118,7 +121,7 @@ class Shopper:
             print(' ')
     
     def make_shopping_list(self):
-        total_cost, unique_worlds, not_on_market = self.get_prices('Light')
+        total_cost, unique_worlds, not_on_market = self.get_prices(DATACENTRE_REGION)
         worlds = self.create_worlds(self.furnitures, unique_worlds)
         
         self.print_world_shopping_list(worlds)
@@ -132,8 +135,7 @@ class Shopper:
         print("Thank you for shopping with us today!")
 
 def main():
-    makeplace_json = 'SaveMeiya.json'
-    furniture_data = json.load(open(makeplace_json))
+    furniture_data = json.load(open(MAKEPLACE_JSON))
     shopper = Shopper(furniture_data)
     shopper.make_shopping_list()
 
