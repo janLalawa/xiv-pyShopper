@@ -1,5 +1,6 @@
 import requests
 import json
+from datetime import datetime
 
 DATACENTRE_REGION = 'Light'
 MAKEPLACE_JSON = 'Save1.json'
@@ -89,10 +90,13 @@ class Shopper:
     def get_price_request(self, world_dc_region):
         largest_quantity = self.get_largest_quantity()
         itemid_string = ','.join(str(x) for x in self.itemIds)
-        universalis_query = 'https://universalis.app/api/v2/{location}/{item_list}?listings={listings}&entries=0'            
-        price_request = requests.get(universalis_query.format(
-            location=world_dc_region, item_list=itemid_string, listings=largest_quantity))
-        return price_request.json()
+        try:
+            universalis_query = 'https://universalis.app/api/v2/{location}/{item_list}?listings={listings}&entries=0'            
+            price_request = requests.get(universalis_query.format(
+                location=world_dc_region, item_list=itemid_string, listings=largest_quantity))
+            return price_request.json()
+        except:
+            print('An error occured while talking to the Universalis API. Try again in a bit or check if their site is up!')
 
     def get_largest_quantity(self):
         largest_quantity = [furniture.quantity for furniture in self.furnitures]
@@ -128,14 +132,25 @@ class Shopper:
         self.print_footer(total_cost, unique_worlds, not_on_market)
 
     def print_footer(self, total_cost, unique_worlds, not_on_market):
+        
+        now = datetime.now()
+        dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
+        print(f"This shopping list was created at {dt_string}")	
+        
         print(f"Total Cost: {total_cost:,} gil")
         print(f"Items found on {unique_worlds}")
         print('')
-        print(f'Could not find these items on the market: {not_on_market}')    
+        print(f'Could not find these items on the market. Perhaps they are cash shop or not sellable?')
+        for item in not_on_market:
+            print(f'{item[2]}x {item[0]}')
+        print('')
         print("Thank you for shopping with us today!")
 
 def main():
-    furniture_data = json.load(open(MAKEPLACE_JSON))
+    try:
+        furniture_data = json.load(open(MAKEPLACE_JSON))
+    except:
+        print('An error occured while loading the JSON. Check your save and maybe re-save it in MakePlace?')
     shopper = Shopper(furniture_data)
     shopper.make_shopping_list()
 
