@@ -36,6 +36,7 @@ There are some limitations to xiv-pyshopper. This is mostly because I don't have
 - It does not have a UI or CLI currently. This is just a simple python script right now :)
 - It doesn't check for errors as well as production code should.
 - It does not accept any file formats other than a Makeplace save JSON!
+- It doesn't know anything about items that can be bought from NPC vendors. Watch out for market board scams!
 
 Most of these are because I hacked it together, achieved my goal, and sort of relaxed. Please do say if there is a great need to expand on this and I can help.
 
